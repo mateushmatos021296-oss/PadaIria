@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>PadaIria — Gestão</title>
+<title>Padaria da Tia Iria — Gestão</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,17 +12,17 @@
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
 :root{
-  --bg:#FBF6EE; --surface:#FFFFFF; --surface-2:#F6EFE3;
-  --ink:#2C2118; --ink-soft:#6E5E50; --line:#EADfce;
-  --crust:#7A4A22; --honey:#E08A1E; --honey-dark:#C7740F;
-  --jam:#C4452F; --green:#3F8A4E; --blue:#3B6FB0;
+  --bg:#EFE4CD; --surface:#FBF6EE; --surface-2:#F3E8D2;
+  --ink:#3F2B18; --ink-soft:#7A6A55; --line:#E0D2B4;
+  --crust:#56391F; --honey:#BF853A; --honey-dark:#A66E2C;
+  --jam:#B5452F; --green:#4A8A52; --blue:#3B6FB0;
   --radius:16px; --shadow:0 2px 12px rgba(80,50,20,.08);
   --maxw:1100px;
 }
 [data-theme="dark"]{
-  --bg:#1A140F; --surface:#241B14; --surface-2:#2E231A;
-  --ink:#F3EADE; --ink-soft:#B6A493; --line:#3A2C20;
-  --crust:#E0A565; --honey:#F0A33B; --honey-dark:#E08A1E;
+  --bg:#211710; --surface:#2C2016; --surface-2:#392A1C;
+  --ink:#F2E7D4; --ink-soft:#C2AE94; --line:#46341F;
+  --crust:#D8AE6E; --honey:#D69A4A; --honey-dark:#BF853A;
   --shadow:0 2px 14px rgba(0,0,0,.4);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -31,7 +31,8 @@ body{
   font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);
   font-size:16px;line-height:1.5;-webkit-tap-highlight-color:transparent;
 }
-h1,h2,h3,.brand{font-family:'Baloo 2',cursive;font-weight:700;line-height:1.15}
+h1,h2,h3{font-family:'Baloo 2',cursive;font-weight:700;line-height:1.15}
+.brand{font-family:Georgia,'Times New Roman',serif;font-weight:700;line-height:1.15;letter-spacing:.01em}
 button{font-family:inherit;cursor:pointer;border:none;font-size:1rem}
 input,select,textarea{font-family:inherit;font-size:16px}
 .hidden{display:none!important}
@@ -40,11 +41,14 @@ input,select,textarea{font-family:inherit;font-size:16px}
 
 /* ---------- LOGIN ---------- */
 #login{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
-  background:radial-gradient(circle at 20% 10%, #fff4e2 0%, var(--bg) 55%);}
+  background:radial-gradient(circle at 20% 10%, #F7EDD6 0%, var(--bg) 55%);}
 .login-card{background:var(--surface);border-radius:24px;box-shadow:var(--shadow);
   padding:36px 28px;width:100%;max-width:400px;border:1px solid var(--line)}
-.login-logo{font-family:'Baloo 2';font-size:2.4rem;font-weight:800;color:var(--crust);text-align:center}
-.login-logo span{color:var(--honey)}
+.login-logo{display:flex;flex-direction:column;align-items:center;gap:1px;text-align:center;margin-bottom:4px}
+.login-logo .wheat{width:36px;height:auto;color:var(--honey);margin-bottom:8px;fill:currentColor}
+.login-logo .wm-top{font-family:Georgia,'Times New Roman',serif;font-size:.92rem;letter-spacing:.34em;color:var(--crust);padding-left:.34em}
+.login-logo .wm-main{font-family:Georgia,'Times New Roman',serif;font-size:2.5rem;font-weight:700;color:var(--ink);line-height:1.05}
+.login-logo .wm-main span{color:var(--honey)}
 .login-sub{text-align:center;color:var(--ink-soft);margin-bottom:24px}
 
 /* ---------- FORM ---------- */
@@ -74,8 +78,9 @@ input,select,textarea{font-family:inherit;font-size:16px}
 #app{display:none}
 .topbar{position:sticky;top:0;z-index:30;background:var(--surface);border-bottom:1px solid var(--line);
   display:flex;align-items:center;gap:12px;padding:12px 18px}
-.topbar .brand{font-size:1.4rem;color:var(--crust)}
+.topbar .brand{font-size:1.4rem;color:var(--ink)}
 .topbar .brand span{color:var(--honey)}
+.topbar .brand-wheat{width:22px;height:32px;color:var(--honey);fill:currentColor;flex-shrink:0}
 .topbar .spacer{flex:1}
 .icon-btn{width:42px;height:42px;border-radius:11px;background:var(--surface-2);display:flex;
   align-items:center;justify-content:center;font-size:1.15rem;color:var(--ink)}
@@ -200,8 +205,8 @@ main{flex:1;padding:20px 18px 110px;min-width:0}
 <!-- ===================== LOGIN ===================== -->
 <div id="login">
   <div class="login-card">
-    <div class="login-logo">Pada<span>Iria</span></div>
-    <div class="login-sub">Gestão da padaria 🥖</div>
+    <div class="login-logo"><svg class="wheat" viewBox="0 0 40 96" aria-hidden="true"><rect x="18.3" y="24" width="3.4" height="60" rx="1.7"/><ellipse cx="20" cy="14" rx="6" ry="14"/><g transform="translate(20,32) rotate(-40)"><ellipse cx="0" cy="-13" rx="5.4" ry="12.5"/></g><g transform="translate(20,32) rotate(40)"><ellipse cx="0" cy="-13" rx="5.4" ry="12.5"/></g><g transform="translate(20,50) rotate(-40)"><ellipse cx="0" cy="-13" rx="5.4" ry="12.5"/></g><g transform="translate(20,50) rotate(40)"><ellipse cx="0" cy="-13" rx="5.4" ry="12.5"/></g><g transform="translate(20,68) rotate(-40)"><ellipse cx="0" cy="-13" rx="5.4" ry="12.5"/></g><g transform="translate(20,68) rotate(40)"><ellipse cx="0" cy="-13" rx="5.4" ry="12.5"/></g></svg><span class="wm-top">PADARIA DA</span><span class="wm-main">Tia <span>Iria</span></span></div>
+    <div class="login-sub">Gestão da padaria</div>
     <div id="configWarn" class="config-warn hidden">
       ⚠️ Configure suas chaves do Supabase no topo do arquivo (SUPABASE_URL e SUPABASE_ANON_KEY).
     </div>
@@ -216,7 +221,8 @@ main{flex:1;padding:20px 18px 110px;min-width:0}
 <!-- ===================== APP ===================== -->
 <div id="app">
   <div class="topbar">
-    <div class="brand">Pada<span>Iria</span></div>
+    <svg class="brand-wheat" viewBox="0 0 40 96" aria-hidden="true"><rect x="18.3" y="24" width="3.4" height="60" rx="1.7"/><ellipse cx="20" cy="14" rx="6" ry="14"/><g transform="translate(20,32) rotate(-40)"><ellipse cx="0" cy="-13" rx="5.4" ry="12.5"/></g><g transform="translate(20,32) rotate(40)"><ellipse cx="0" cy="-13" rx="5.4" ry="12.5"/></g><g transform="translate(20,50) rotate(-40)"><ellipse cx="0" cy="-13" rx="5.4" ry="12.5"/></g><g transform="translate(20,50) rotate(40)"><ellipse cx="0" cy="-13" rx="5.4" ry="12.5"/></g><g transform="translate(20,68) rotate(-40)"><ellipse cx="0" cy="-13" rx="5.4" ry="12.5"/></g><g transform="translate(20,68) rotate(40)"><ellipse cx="0" cy="-13" rx="5.4" ry="12.5"/></g></svg>
+    <div class="brand">Padaria da Tia <span>Iria</span></div>
     <div class="spacer"></div>
     <button class="icon-btn" id="btnTheme" title="Tema">🌙</button>
     <button class="icon-btn" id="btnLogout" title="Sair">⏻</button>
@@ -308,11 +314,11 @@ async function ensureEmpresa(){
   let {data}=await sb.from("empresa").select("*").eq("owner_id",USER.id).maybeSingle();
   if(!data){
     const slug="loja-"+Math.random().toString(36).slice(2,8);
-    const ins=await sb.from("empresa").insert({owner_id:USER.id,nome:"PadaIria",slug}).select().single();
+    const ins=await sb.from("empresa").insert({owner_id:USER.id,nome:"Padaria da Tia Iria",slug}).select().single();
     data=ins.data;
   }
   EMPRESA=data;
-  $$all(".brand").forEach(b=>b.innerHTML=(EMPRESA.nome||"PadaIria").replace(/Iria/i,'<span>Iria</span>'));
+  $$all(".brand").forEach(b=>b.innerHTML=(EMPRESA.nome||"Padaria da Tia Iria").replace(/Iria(?![\s\S]*Iria)/i,'<span>Iria</span>'));
 }
 function $$all(s){return [...document.querySelectorAll(s)];}
 
@@ -413,7 +419,7 @@ async function pageInicio(){
     const next=new Date(d);next.setDate(d.getDate()+1);
     vals.push(sum(vendas.filter(v=>{const x=new Date(v.data_venda);return x>=d&&x<next;})));}
   const ctx=$("#cVendas");
-  window._charts.push(new Chart(ctx,{type:"bar",data:{labels,datasets:[{data:vals,backgroundColor:"#E08A1E",borderRadius:8}]},
+  window._charts.push(new Chart(ctx,{type:"bar",data:{labels,datasets:[{data:vals,backgroundColor:"#BF853A",borderRadius:8}]},
     options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:v=>"R$"+v}}},responsive:true,maintainAspectRatio:false}}));
 
   // top produtos
@@ -724,7 +730,7 @@ async function salvarCliente(id){
 window.salvarCliente=salvarCliente;
 async function delCliente(id){if(!confirm("Excluir cliente?"))return;await sb.from("clientes").delete().eq("id",id);closeModal();go("clientes");}
 window.delCliente=delCliente;
-function zap(num,nome){const n=(num||"").replace(/\D/g,"");window.open(`https://wa.me/${n}?text=${encodeURIComponent("Olá "+nome+"! Aqui é da PadaIria 🥖")}`,"_blank");}
+function zap(num,nome){const n=(num||"").replace(/\D/g,"");window.open(`https://wa.me/${n}?text=${encodeURIComponent("Olá "+nome+"! Aqui é da Padaria da Tia Iria 🥖")}`,"_blank");}
 window.zap=zap;
 
 /* ============================================================
@@ -939,17 +945,17 @@ async function pageRelatorios(){
   // evolução (por dia no período, max 30 pontos)
   const byDay={};V.forEach(v=>{const d=new Date(v.data_venda).toLocaleDateString("pt-BR");byDay[d]=(byDay[d]||0)+Number(v.total);});
   const evL=Object.keys(byDay).slice(-30),evV=evL.map(k=>byDay[k]);
-  window._charts.push(new Chart($("#cEvol"),{type:"line",data:{labels:evL,datasets:[{data:evV,borderColor:"#E08A1E",backgroundColor:"rgba(224,138,30,.15)",fill:true,tension:.3}]},options:{plugins:{legend:{display:false}},responsive:true,maintainAspectRatio:false}}));
+  window._charts.push(new Chart($("#cEvol"),{type:"line",data:{labels:evL,datasets:[{data:evV,borderColor:"#BF853A",backgroundColor:"rgba(191,133,58,.15)",fill:true,tension:.3}]},options:{plugins:{legend:{display:false}},responsive:true,maintainAspectRatio:false}}));
 
   // produtos
   const pAgg={};I.forEach(i=>{const k=i.produto_nome||"—";pAgg[k]=(pAgg[k]||0)+Number(i.quantidade);});
   const pe=Object.entries(pAgg).sort((a,b)=>b[1]-a[1]).slice(0,6);
-  window._charts.push(new Chart($("#cProd"),{type:"bar",data:{labels:pe.map(x=>x[0]),datasets:[{data:pe.map(x=>x[1]),backgroundColor:"#7A4A22",borderRadius:6}]},options:{indexAxis:"y",plugins:{legend:{display:false}},responsive:true,maintainAspectRatio:false}}));
+  window._charts.push(new Chart($("#cProd"),{type:"bar",data:{labels:pe.map(x=>x[0]),datasets:[{data:pe.map(x=>x[1]),backgroundColor:"#56391F",borderRadius:6}]},options:{indexAxis:"y",plugins:{legend:{display:false}},responsive:true,maintainAspectRatio:false}}));
 
   // formas pgto
   const fAgg={};V.forEach(v=>{fAgg[v.forma_pagamento]=(fAgg[v.forma_pagamento]||0)+Number(v.total);});
   const fl={avista:"Dinheiro",pix:"Pix",cartao:"Cartão",fiado:"Fiado"};
-  window._charts.push(new Chart($("#cPag"),{type:"doughnut",data:{labels:Object.keys(fAgg).map(k=>fl[k]||k),datasets:[{data:Object.values(fAgg),backgroundColor:["#E08A1E","#3F8A4E","#3B6FB0","#C4452F"]}]},options:{responsive:true,maintainAspectRatio:false}}));
+  window._charts.push(new Chart($("#cPag"),{type:"doughnut",data:{labels:Object.keys(fAgg).map(k=>fl[k]||k),datasets:[{data:Object.values(fAgg),backgroundColor:["#BF853A","#4A8A52","#3B6FB0","#B5452F"]}]},options:{responsive:true,maintainAspectRatio:false}}));
   window._relData={V,produtos,clientes};
 }
 function setRel(k){RELFILTER=k;pageRelatorios();}
@@ -960,7 +966,7 @@ function exportarExcel(){
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet((V||[]).map(v=>({Data:new Date(v.data_venda).toLocaleString("pt-BR"),Pagamento:v.forma_pagamento,Total:Number(v.total),Status:v.status}))),"Vendas");
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet((produtos||[]).map(p=>({Produto:p.nome,Custo:Number(p.custo_producao),Preço:Number(p.preco_venda),Estoque:Number(p.estoque_atual)}))),"Produtos");
   XLSX.utils.book_append_sheet(wb,XLSX.utils.json_to_sheet((clientes||[]).map(c=>({Nome:c.nome,Telefone:c.telefone,WhatsApp:c.whatsapp}))),"Clientes");
-  XLSX.writeFile(wb,`PadaIria_relatorio_${todayISO()}.xlsx`);
+  XLSX.writeFile(wb,`Padaria_da_Tia_Iria_relatorio_${todayISO()}.xlsx`);
 }
 window.exportarExcel=exportarExcel;
 
@@ -995,7 +1001,7 @@ async function salvarEmpresa(){
   const r=await sb.from("empresa").update(obj).eq("id",EMPRESA.id);
   if(r.error)return toast("Erro: "+r.error.message);
   EMPRESA={...EMPRESA,...obj};
-  $$all(".brand").forEach(b=>b.innerHTML=(EMPRESA.nome||"PadaIria").replace(/Iria/i,'<span>Iria</span>'));
+  $$all(".brand").forEach(b=>b.innerHTML=(EMPRESA.nome||"Padaria da Tia Iria").replace(/Iria(?![\s\S]*Iria)/i,'<span>Iria</span>'));
   toast("Perfil salvo ✅");
 }
 window.salvarEmpresa=salvarEmpresa;
